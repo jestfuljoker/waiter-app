@@ -1,5 +1,7 @@
 import express from 'express';
 
+const PORT = 3001;
+
 const app = express();
 
-app.listen(3001, () => console.log('🚀 Server running on port 3001'));
+app.listen(PORT, () => console.log(`🚀 Server running on port http://localhost:${PORT}`));

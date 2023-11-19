@@ -2,12 +2,17 @@ import { Request, Response } from 'express';
 import { Category } from '../../app/models';
 
 export async function createCategory(req: Request, res: Response): Promise<Response> {
-	const { name, icon } = req.body;
+	try {
+		const { name, icon } = req.body;
 
-	const category = await Category.create({
-		name,
-		icon,
-	});
+		const category = await Category.create({
+			name,
+			icon,
+		});
 
-	return res.json(category);
+		return res.status(201).json(category);
+	} catch (error) {
+		console.error('An error occurred while creating a category', error);
+		return res.sendStatus(500);
+	}
 }

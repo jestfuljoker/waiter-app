@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+
 import { Product } from '../../models';
 
 export async function listProductsByCategory(req: Request, res: Response): Promise<Response> {

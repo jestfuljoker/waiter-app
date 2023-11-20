@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { Order } from '../../models';
+import { OrderModel } from '../../models';
 
 export async function changeOrderStatus(req: Request, res: Response): Promise<Response> {
 	try {
@@ -12,9 +12,8 @@ export async function changeOrderStatus(req: Request, res: Response): Promise<Re
 				error: 'Status should be one of these: WAITING, IN_PRODUCTION or DONE',
 			});
 		}
-		console.log('OI');
 
-		await Order.findByIdAndUpdate(orderId, { status });
+		await OrderModel.findByIdAndUpdate(orderId, { status });
 
 		return res.sendStatus(204);
 	} catch (error) {

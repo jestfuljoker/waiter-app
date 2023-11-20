@@ -1,10 +1,19 @@
+import { ThemeProvider } from 'styled-components';
+
+import { Header } from './components/Header';
+import { Orders } from './components/Orders';
 import { GlobalStyles } from './styles/GlobalStyles';
+import { theme } from './styles/theme';
 
 export function App() {
 	return (
 		<>
-			<GlobalStyles />
-			<h1>Hello World!!!</h1>
+			<ThemeProvider theme={theme}>
+				<GlobalStyles />
+
+				<Header />
+				<Orders />
+			</ThemeProvider>
 		</>
 	);
 }

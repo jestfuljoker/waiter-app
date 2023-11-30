@@ -23,6 +23,7 @@ module.exports = function (api) {
 						'~/components': ['./src/components'],
 						'~/mocks': ['./src/mocks'],
 						'~/styles': ['./src/styles'],
+						'~/utils': ['./src/utils'],
 					},
 				},
 			],

@@ -19,9 +19,10 @@ module.exports = function (api) {
 					],
 					root: ['.'],
 					alias: {
-						'@assets': ['./src/assets'],
-						'@components': ['./src/components'],
-						'@mocks': ['./src/mocks'],
+						'~/assets': ['./src/assets'],
+						'~/components': ['./src/components'],
+						'~/mocks': ['./src/mocks'],
+						'~/styles': ['./src/styles'],
 					},
 				},
 			],

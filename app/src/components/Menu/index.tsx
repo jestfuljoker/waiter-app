@@ -18,7 +18,7 @@ export function Menu() {
 			renderItem={({ item: product }) => (
 				<S.Product>
 					<S.ProductImage
-						source={{ uri: `http://192.168.0.11:3001/uploads/${product.imagePath}` }}
+						source={{ uri: `http://192.168.0.23:3001/uploads/${product.imagePath}` }}
 					/>
 
 					<S.ProductDetails>

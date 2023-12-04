@@ -25,6 +25,7 @@ module.exports = function (api) {
 						'~/styles': ['./src/styles'],
 						'~/utils': ['./src/utils'],
 						'~/@types': ['./src/@types'],
+						'~/service': ['./src/service'],
 					},
 				},
 			],

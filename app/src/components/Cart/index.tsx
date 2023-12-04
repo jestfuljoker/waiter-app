@@ -3,6 +3,7 @@ import { FlatList, TouchableOpacity } from 'react-native';
 
 import type { CartItem } from '~/@types/cartItem';
 import type { Product } from '~/@types/product';
+import { api } from '~/service/api';
 import { formatCurrency } from '~/utils/formatCurrency';
 
 import { Button } from '../Button';
@@ -14,12 +15,19 @@ import * as S from './styles';
 
 interface CartProps {
 	cartItems: CartItem[];
+	selectedTable: string;
 	onAddToCart: (product: Product) => void;
 	onDecrementCartItem: (product: Product) => void;
 	onConfirmOrder: () => void;
 }
 
-export function Cart({ cartItems, onAddToCart, onDecrementCartItem, onConfirmOrder }: CartProps) {
+export function Cart({
+	cartItems,
+	selectedTable,
+	onAddToCart,
+	onDecrementCartItem,
+	onConfirmOrder,
+}: CartProps) {
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -27,7 +35,20 @@ export function Cart({ cartItems, onAddToCart, onDecrementCartItem, onConfirmOrd
 		return accumulator + cartItem.quantity * cartItem.product.price;
 	}, 0);
 
-	function handleConfirmOrder() {
+	async function handleConfirmOrder() {
+		const payload = {
+			table: selectedTable,
+			products: cartItems.map((cartItem) => ({
+				product: cartItem.product.id,
+				quantity: cartItem.quantity,
+			})),
+		};
+
+		setIsLoading(true);
+
+		await api.post('/orders', payload);
+
+		setIsLoading(false);
 		setIsModalVisible(true);
 	}
 

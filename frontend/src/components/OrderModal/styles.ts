@@ -182,6 +182,11 @@ export const Actions = styled.footer`
 		flex-direction: column;
 		margin-top: 2rem;
 
+		button:disabled {
+			opacity: 0.5;
+			cursor: not-allowed;
+		}
+
 		.primary {
 			background-color: ${theme.colors.gray[500]};
 			border-radius: 48px;

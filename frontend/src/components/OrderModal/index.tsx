@@ -11,6 +11,9 @@ interface OrderModalProps {
 	visible: boolean;
 	order: Order | null;
 	onClose: () => void;
+	onCancelOrder: () => Promise<void>;
+	onChangeOrderStatus(): Promise<void>;
+	isLoading: boolean;
 }
 
 const orderStatusMap = {
@@ -28,7 +31,14 @@ const orderStatusMap = {
 	},
 };
 
-export function OrderModal({ visible, order, onClose }: OrderModalProps) {
+export function OrderModal({
+	visible,
+	order,
+	isLoading,
+	onClose,
+	onCancelOrder,
+	onChangeOrderStatus,
+}: OrderModalProps) {
 	const { elementRef, shouldRender } = useAnimatedUnmount(visible);
 
 	useEffect(() => {
@@ -96,12 +106,21 @@ export function OrderModal({ visible, order, onClose }: OrderModalProps) {
 				</S.OrderDetails>
 
 				<S.Actions>
-					<button type="button" className="primary">
-						<span>👨‍🍳</span>
-						<strong>Iniciar Produção</strong>
-					</button>
+					{order?.status !== OrderStatus.DONE && (
+						<button
+							onClick={onChangeOrderStatus}
+							disabled={isLoading}
+							type="button"
+							className="primary"
+						>
+							<span>{order?.status === OrderStatus.WAITING ? '👨‍🍳' : '✅'}</span>
+							<strong>
+								{order?.status === OrderStatus.WAITING ? 'Iniciar Produção' : 'Concluir Pedido'}
+							</strong>
+						</button>
+					)}
 
-					<button type="button" className="secondary">
+					<button disabled={isLoading} onClick={onCancelOrder} type="button" className="secondary">
 						<strong>Cancelar pedido</strong>
 					</button>
 				</S.Actions>

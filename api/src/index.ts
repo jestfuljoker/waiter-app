@@ -9,6 +9,13 @@ const PORT = 3001;
 connect(() => {
 	const app = express();
 
+	app.use((_, response, next) => {
+		response.setHeader('Access-Control-Allow-Origin', '*');
+		response.setHeader('Access-Control-Allow-Methods', '*');
+		response.setHeader('Access-Control-Allow-Headers', '*');
+
+		next();
+	});
 	app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
 	app.use(express.json());
 

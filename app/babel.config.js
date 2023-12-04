@@ -24,6 +24,7 @@ module.exports = function (api) {
 						'~/mocks': ['./src/mocks'],
 						'~/styles': ['./src/styles'],
 						'~/utils': ['./src/utils'],
+						'~/@types': ['./src/@types'],
 					},
 				},
 			],

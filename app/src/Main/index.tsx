@@ -1,74 +1,80 @@
 import { useState } from 'react';
+import { ActivityIndicator } from 'react-native';
 
 import type { CartItem } from '~/@types/cartItem';
+import type { Product } from '~/@types/product';
 import { Button } from '~/components/Button';
 import { Cart } from '~/components/Cart';
 import { Categories } from '~/components/Categories';
 import { Header } from '~/components/Header';
+import { Empty } from '~/components/Icons/Empty';
 import { Menu } from '~/components/Menu';
 import { TableModal } from '~/components/TableModal';
+import { Text } from '~/components/Text';
+import { products as mockProducts } from '~/mocks/products';
 
 import * as S from './styles';
 
 export function Main() {
 	const [isTableModalVisible, setIsTableModalVisible] = useState(false);
 	const [selectedTable, setSelectedTable] = useState('');
-	const [cartItems, setCartItems] = useState<CartItem[]>([
-		{
-			product: {
-				id: '6372e040f52e37ef85fe2c5e',
-				name: 'Pizza quatro queijos',
-				description: 'Deliciosa pizza quatro queijos com borda simples',
-				imagePath: '1700394188060-quatro-queijos.png',
-				price: 40,
-				ingredients: [
-					{
-						name: 'Mussarela',
-						icon: '🧀',
-						id: '6372e040f52e37ef85fe2c5f',
-					},
-					{
-						name: 'Parmesão',
-						icon: '🧀',
-						id: '6372e040f52e37ef85fe2c60',
-					},
-					{
-						name: 'Gouda',
-						icon: '🧀',
-						id: '6372e040f52e37ef85fe2c61',
-					},
-					{
-						name: 'Brie',
-						icon: '🧀',
-						id: '6372e040f52e37ef85fe2c62',
-					},
-				],
-			},
-			quantity: 2,
-		},
-		{
-			product: {
-				id: '6372e276a381106c0f854cb3',
-				name: 'Coca cola',
-				description: 'Coca cola lata geladinha topzera',
-				imagePath: '1700394589247-coca-cola.png',
-				price: 7,
-				ingredients: [],
-			},
-			quantity: 2,
-		},
-	]);
+	const [cartItems, setCartItems] = useState<CartItem[]>([]);
+	const [isLoading, setIsLoading] = useState(false);
+	const [products, setProducts] = useState<Product[]>([]);
 
 	function handleSaveTable(table: string) {
 		setSelectedTable(table);
 	}
 
-	function handleCancelOrder() {
+	function handleResetOrder() {
 		setSelectedTable('');
+		setCartItems([]);
 	}
 
-	function handleAddToCart(item: CartItem) {
-		setCartItems((prevState) => [...prevState, item]);
+	function handleAddToCart(product: Product) {
+		if (!selectedTable) {
+			setIsTableModalVisible(true);
+		}
+
+		setCartItems((prevState) => {
+			const itemIndex = prevState.findIndex((cartItem) => cartItem.product.id === product.id);
+
+			if (itemIndex < 0) {
+				return [...prevState, { product, quantity: 1 }];
+			}
+
+			const newCartItems = [...prevState];
+
+			const item = newCartItems[itemIndex];
+
+			newCartItems[itemIndex] = {
+				...item,
+				quantity: item.quantity + 1,
+			};
+
+			return newCartItems;
+		});
+	}
+
+	function handleDecrementCartItem(product: Product) {
+		setCartItems((prevState) => {
+			const itemIndex = prevState.findIndex((cartItem) => cartItem.product.id === product.id);
+
+			const item = prevState[itemIndex];
+			const newCartItems = [...prevState];
+
+			if (item.quantity === 1) {
+				newCartItems.splice(itemIndex, 1);
+				return newCartItems;
+			}
+
+			newCartItems[itemIndex] = {
+				...item,
+				quantity: item.quantity - 1,
+			};
+
+			return newCartItems;
+		});
 	}
 
 	return (
@@ -80,25 +86,51 @@ export function Main() {
 			/>
 
 			<S.Container>
-				<Header selectedTable={selectedTable} onCancelOrder={handleCancelOrder} />
+				<Header selectedTable={selectedTable} onCancelOrder={handleResetOrder} />
 
-				<S.CategoriesContainer>
-					<Categories />
-				</S.CategoriesContainer>
+				{isLoading && (
+					<S.CenteredContainer>
+						<ActivityIndicator color="#D73035" size="large" />
+					</S.CenteredContainer>
+				)}
 
-				<S.MenuContainer>
-					<Menu />
-				</S.MenuContainer>
+				{!isLoading && (
+					<>
+						<S.CategoriesContainer>
+							<Categories />
+						</S.CategoriesContainer>
+
+						{products.length > 0 ? (
+							<S.MenuContainer>
+								<Menu onAddToCart={handleAddToCart} products={products} />
+							</S.MenuContainer>
+						) : (
+							<S.CenteredContainer>
+								<Empty />
+								<Text color="#666" style={{ marginTop: 24 }}>
+									Nenhum produto encontrado!
+								</Text>
+							</S.CenteredContainer>
+						)}
+					</>
+				)}
 			</S.Container>
 
 			<S.Footer>
-				<S.FooterContainer>
-					{!selectedTable ? (
-						<Button onPress={() => setIsTableModalVisible(true)}>Novo Pedido</Button>
-					) : (
-						<Cart cartItems={cartItems} />
-					)}
-				</S.FooterContainer>
+				{/* <S.FooterContainer> */}
+				{!selectedTable ? (
+					<Button onPress={() => setIsTableModalVisible(true)} disabled={isLoading}>
+						Novo Pedido
+					</Button>
+				) : (
+					<Cart
+						cartItems={cartItems}
+						onAddToCart={handleAddToCart}
+						onDecrementCartItem={handleDecrementCartItem}
+						onConfirmOrder={handleResetOrder}
+					/>
+				)}
+				{/* </S.FooterContainer> */}
 			</S.Footer>
 		</>
 	);

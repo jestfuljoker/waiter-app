@@ -1,19 +1,24 @@
 import type { ReactNode } from 'react';
-import type { TouchableOpacityProps } from 'react-native';
+import { ActivityIndicator, type TouchableOpacityProps } from 'react-native';
 
 import { Text } from '../Text';
 import * as S from './styles';
 
 interface ButtonProps extends TouchableOpacityProps {
 	children: ReactNode;
+	loading?: boolean;
 }
 
-export function Button({ children, ...props }: ButtonProps) {
+export function Button({ children, loading, ...props }: ButtonProps) {
 	return (
-		<S.Container {...props}>
-			<Text weight="600" color="#fff">
-				{children}
-			</Text>
+		<S.Container {...props} disabled={props.disabled || loading}>
+			{!loading ? (
+				<Text weight="600" color="#fff">
+					{children}
+				</Text>
+			) : (
+				<ActivityIndicator color="#fff" />
+			)}
 		</S.Container>
 	);
 }

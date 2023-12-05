@@ -1,13 +1,20 @@
 import express from 'express';
+import http from 'node:http';
 import path from 'node:path';
+import { Server } from 'socket.io';
 
 import { connect } from './app/database';
 import { router } from './router';
 
 const PORT = 3001;
+const app = express();
+const server = http.createServer(app);
+export const io = new Server(server);
 
 connect(() => {
-	const app = express();
+	io.on('connection', () => {
+		console.log('🚀 Client connected');
+	});
 
 	app.use((_, response, next) => {
 		response.setHeader('Access-Control-Allow-Origin', '*');
@@ -21,5 +28,5 @@ connect(() => {
 
 	app.use(router);
 
-	app.listen(PORT, () => console.log(`🚀 Server running on port http://localhost:${PORT}`));
+	server.listen(PORT, () => console.log(`🚀 Server running on port http://localhost:${PORT}`));
 });

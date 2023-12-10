@@ -55,5 +55,10 @@
 				"html": true
 			}
 		]
+	},
+	"settings": {
+		"react": {
+			"version": "detect"
+		}
 	}
 }

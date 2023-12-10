@@ -7,7 +7,10 @@
 		"start": "expo start",
 		"android": "expo start --android",
 		"ios": "expo start --ios",
-		"web": "expo start --web"
+		"web": "expo start --web",
+		"lint": "eslint --ext .ts,.tsx src --fix",
+		"format": "prettier --write src",
+		"format:all": "yarn lint && yarn format"
 	},
 	"dependencies": {
 		"axios": "^1.6.2",

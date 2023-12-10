@@ -1,3 +1,18 @@
+const config = require('./tsconfig.json');
+
+const { baseUrl, paths } = config.compilerOptions;
+
+const getAliases = () => {
+	return Object.entries(paths).reduce((aliases, alias) => {
+		const key = alias[0].replace('/*', '');
+		const value = baseUrl + alias[1][0].replace('*', '');
+		return {
+			...aliases,
+			[key]: value,
+		};
+	}, {});
+};
+
 module.exports = function (api) {
 	api.cache(true);
 	return {
@@ -6,27 +21,8 @@ module.exports = function (api) {
 			[
 				'module-resolver',
 				{
-					extensions: [
-						'.ios.js',
-						'.android.js',
-						'.ios.jsx',
-						'.android.jsx',
-						'.js',
-						'.jsx',
-						'.json',
-						'.ts',
-						'.tsx',
-					],
-					root: ['.'],
-					alias: {
-						'~/assets': ['./src/assets'],
-						'~/components': ['./src/components'],
-						'~/mocks': ['./src/mocks'],
-						'~/styles': ['./src/styles'],
-						'~/utils': ['./src/utils'],
-						'~/@types': ['./src/@types'],
-						'~/service': ['./src/service'],
-					},
+					extensions: ['.ts', '.tsx', '.android.tsx', '.ios.tsx'],
+					alias: getAliases(),
 				},
 			],
 		],

@@ -4,27 +4,9 @@
 		"strict": true,
 		"baseUrl": ".",
 		"paths": {
-			"~/assets/*": [
-				"src/assets/*"
-			],
-			"~/utils/*": [
-				"src/utils/*"
-			],
-			"~/components/*": [
-				"src/components/*"
-			],
-			"~/mocks/*": [
-				"src/mocks/*"
-			],
-			"~/styles/*": [
-				"src/styles/*"
-			],
-			"~/@types/*": [
-				"src/@types/*"
-			],
-			"~/service/*": [
-				"src/service/*"
-			],
+			"~/*": [
+				"src/*"
+			]
 		}
 	}
 }

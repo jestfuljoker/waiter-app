@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Modal, TouchableOpacity } from 'react-native';
 
 import { colors } from '~/styles/theme/tokens';
@@ -8,6 +7,7 @@ import { Button } from '../Button';
 import { Close } from '../Icons/Close';
 import { Text } from '../Text';
 import * as S from './styles';
+import { useTableModal } from './useTableModal';
 
 interface TableModalProps {
 	visible: boolean;
@@ -16,13 +16,7 @@ interface TableModalProps {
 }
 
 export function TableModal({ visible, onClose, onSave }: TableModalProps) {
-	const [table, setTable] = useState('');
-
-	function handleSave() {
-		onSave(table);
-		setTable('');
-		onClose();
-	}
+	const { table, handleSave, setTable } = useTableModal({ onClose, onSave });
 
 	return (
 		<Modal transparent visible={visible} animationType="fade">

@@ -1,8 +1,5 @@
-import { useState } from 'react';
 import { FlatList, TouchableOpacity } from 'react-native';
 
-import type { CreateOrderPayload } from '~/service/requests/orders';
-import { OrdersService } from '~/service/requests/orders';
 import type { Product } from '~/service/requests/products';
 import { formatCurrency } from '~/utils/formatCurrency';
 
@@ -12,6 +9,7 @@ import { PlusCircle } from '../Icons/PlusCircle';
 import { OrderConfirmedModal } from '../OrderConfirmedModal';
 import { Text } from '../Text';
 import * as S from './styles';
+import { useCart } from './useCart';
 
 export interface CartItem {
 	product: Product;
@@ -33,34 +31,11 @@ export function Cart({
 	onDecrementCartItem,
 	onConfirmOrder,
 }: CartProps) {
-	const [isModalVisible, setIsModalVisible] = useState(false);
-	const [isLoading, setIsLoading] = useState(false);
-
-	const total = cartItems.reduce((accumulator, cartItem) => {
-		return accumulator + cartItem.quantity * cartItem.product.price;
-	}, 0);
-
-	async function handleConfirmOrder() {
-		const payload: CreateOrderPayload = {
-			table: selectedTable,
-			products: cartItems.map((cartItem) => ({
-				product: cartItem.product.id,
-				quantity: cartItem.quantity,
-			})),
-		};
-
-		setIsLoading(true);
-
-		await OrdersService.createOrder(payload);
-
-		setIsLoading(false);
-		setIsModalVisible(true);
-	}
-
-	function handleOk() {
-		setIsModalVisible(false);
-		onConfirmOrder();
-	}
+	const { isModalVisible, isLoading, total, handleOk, handleConfirmOrder } = useCart({
+		cartItems,
+		selectedTable,
+		onConfirmOrder,
+	});
 
 	return (
 		<>
@@ -112,6 +87,7 @@ export function Cart({
 					)}
 				/>
 			)}
+
 			<S.Summary>
 				<S.TotalContainer>
 					{cartItems.length > 0 ? (

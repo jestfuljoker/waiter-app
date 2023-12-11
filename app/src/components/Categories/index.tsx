@@ -1,10 +1,10 @@
-import { useState } from 'react';
 import { FlatList } from 'react-native';
 
 import type { Category } from '~/service/requests/categories';
 
 import { Text } from '../Text';
 import * as S from './styles';
+import { useCategories } from './useCategories';
 
 interface CategoriesProps {
 	categories: Category[];
@@ -12,14 +12,7 @@ interface CategoriesProps {
 }
 
 export function Categories({ categories, onSelectCategory }: CategoriesProps) {
-	const [selectedCategory, setSelectedCategory] = useState('');
-
-	function handleSelectCategory(categoryId: string) {
-		const newCategoryId = selectedCategory === categoryId ? '' : categoryId;
-
-		onSelectCategory(newCategoryId);
-		setSelectedCategory(newCategoryId);
-	}
+	const { selectedCategory, handleSelectCategory } = useCategories({ onSelectCategory });
 
 	return (
 		<FlatList

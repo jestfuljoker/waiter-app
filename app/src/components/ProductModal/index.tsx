@@ -7,6 +7,7 @@ import { Button } from '../Button';
 import { Close } from '../Icons/Close';
 import { Text } from '../Text';
 import * as S from './styles';
+import { useProductModal } from './useProductModal';
 
 interface ProductModalProps {
 	visible: boolean;
@@ -16,13 +17,10 @@ interface ProductModalProps {
 }
 
 export function ProductModal({ visible, onClose, product, onAddToCart }: ProductModalProps) {
+	const { handleAddToCart } = useProductModal({ onAddToCart, onClose, product });
+
 	if (!product) {
 		return null;
-	}
-
-	function handleAddToCart() {
-		onAddToCart(product!);
-		onClose();
 	}
 
 	return (

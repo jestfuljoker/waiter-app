@@ -1,8 +1,10 @@
+import { env } from '~/config/env';
+
 import HttpClient from '../../client';
 import type { CreateOrderPayload } from './types';
 
 export class OrdersService {
-	private static httpClient: HttpClient = new HttpClient('http://192.168.0.20:3001');
+	private static httpClient: HttpClient = new HttpClient(env.apiUrl);
 
 	private constructor() {}
 

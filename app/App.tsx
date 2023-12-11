@@ -1,4 +1,7 @@
 import { useFonts } from 'expo-font';
+import { ThemeProvider } from 'styled-components/native';
+
+import { theme } from '~/styles/theme';
 
 import { Main } from './src/Main';
 
@@ -9,5 +12,9 @@ export default function App() {
 		'GeneralSans-700': require('~/assets/fonts/GeneralSans-Bold.otf'),
 	});
 
-	return isFontLoaded ? <Main /> : null;
+	return isFontLoaded ? (
+		<ThemeProvider theme={theme}>
+			<Main />
+		</ThemeProvider>
+	) : null;
 }

@@ -75,17 +75,17 @@ export function Cart({
 								/>
 
 								<S.QuantityContainer>
-									<Text color="#666" size={14}>
+									<Text color="gray-400" size="body-sm">
 										{cartItem.quantity}x
 									</Text>
 								</S.QuantityContainer>
 
 								<S.ProductDetails>
-									<Text weight="600" size={14}>
+									<Text weight="bold" size="body-sm">
 										{cartItem.product.name}
 									</Text>
 
-									<Text size={14} color="#666" style={{ marginTop: 4 }}>
+									<Text size="body-sm" color="gray-400" style={{ marginTop: 4 }}>
 										{formatCurrency(cartItem.product.price)}
 									</Text>
 								</S.ProductDetails>
@@ -111,14 +111,14 @@ export function Cart({
 				<S.TotalContainer>
 					{cartItems.length > 0 ? (
 						<>
-							<Text color="#666">Total</Text>
+							<Text color="gray-400">Total</Text>
 
-							<Text size={20} weight="600">
+							<Text size="h5" weight="bold">
 								{formatCurrency(total)}
 							</Text>
 						</>
 					) : (
-						<Text color="#666">Seu carrinho está vazio</Text>
+						<Text color="gray-400">Seu carrinho está vazio</Text>
 					)}
 				</S.TotalContainer>
 

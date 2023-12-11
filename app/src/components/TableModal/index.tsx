@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Modal, TouchableOpacity } from 'react-native';
 
+import { colors } from '~/styles/theme/tokens';
 import { isAndroid } from '~/utils/os';
 
 import { Button } from '../Button';
@@ -28,10 +29,10 @@ export function TableModal({ visible, onClose, onSave }: TableModalProps) {
 			<S.Overlay behavior={isAndroid ? 'height' : 'padding'}>
 				<S.Body>
 					<S.Header>
-						<Text weight="600">Informe a mesa</Text>
+						<Text weight="medium">Informe a mesa</Text>
 
 						<TouchableOpacity onPress={onClose}>
-							<Close color="#666" />
+							<Close color="gray-400" />
 						</TouchableOpacity>
 					</S.Header>
 
@@ -41,7 +42,7 @@ export function TableModal({ visible, onClose, onSave }: TableModalProps) {
 							onChangeText={(value) => setTable(value)}
 							keyboardType="number-pad"
 							placeholder="Número da mesa"
-							placeholderTextColor="#666"
+							placeholderTextColor={`${colors.gray[400]}`}
 							value={table}
 						/>
 

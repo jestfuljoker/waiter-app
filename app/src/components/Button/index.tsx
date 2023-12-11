@@ -13,7 +13,7 @@ export function Button({ children, loading, ...props }: ButtonProps) {
 	return (
 		<S.Container {...props} disabled={props.disabled || loading}>
 			{!loading ? (
-				<Text weight="600" color="#fff">
+				<Text weight="bold" color="gray-0">
 					{children}
 				</Text>
 			) : (

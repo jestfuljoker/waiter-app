@@ -45,13 +45,13 @@ export function Menu({ onAddToCart, products }: MenuProps) {
 						/>
 
 						<S.ProductDetails>
-							<Text weight="600">{product.name}</Text>
+							<Text weight="medium">{product.name}</Text>
 
-							<Text style={{ marginVertical: 8 }} color="#666" size={14}>
+							<Text style={{ marginVertical: 8 }} color="gray-400" size="body-sm">
 								{product.description}
 							</Text>
 
-							<Text size={14} weight="600">
+							<Text size="body-sm" weight="medium">
 								{formatCurrency(product.price)}
 							</Text>
 						</S.ProductDetails>

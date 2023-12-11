@@ -40,18 +40,18 @@ export function ProductModal({ visible, onClose, product, onAddToCart }: Product
 
 			<S.Body>
 				<S.Header>
-					<Text weight="600" size={24}>
+					<Text weight="medium" size="h4">
 						{product.name}
 					</Text>
 
-					<Text color="#666" style={{ marginTop: 8 }}>
+					<Text color="gray-400" style={{ marginTop: 8 }}>
 						{product.description}
 					</Text>
 				</S.Header>
 
 				{product.ingredients.length > 0 && (
 					<S.IngredientsContainer>
-						<Text weight="600" color="#666">
+						<Text weight="medium" color="gray-400">
 							Ingredientes
 						</Text>
 
@@ -64,7 +64,7 @@ export function ProductModal({ visible, onClose, product, onAddToCart }: Product
 								<S.Ingredient>
 									<Text>{ingredient.icon}</Text>
 
-									<Text color="#666" size={14} style={{ marginLeft: 20 }}>
+									<Text color="gray-400" size="body-sm" style={{ marginLeft: 20 }}>
 										{ingredient.name}
 									</Text>
 								</S.Ingredient>
@@ -77,9 +77,9 @@ export function ProductModal({ visible, onClose, product, onAddToCart }: Product
 			<S.Footer>
 				<S.FooterContainer>
 					<S.PriceContainer>
-						<Text color="#666">Preço</Text>
+						<Text color="gray-400">Preço</Text>
 
-						<Text size={20} weight="600">
+						<Text size="h5" weight="medium">
 							{formatCurrency(product.price)}
 						</Text>
 					</S.PriceContainer>

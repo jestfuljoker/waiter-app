@@ -114,7 +114,7 @@ export function Main() {
 
 				{isLoading && (
 					<S.CenteredContainer>
-						<ActivityIndicator color="#D73035" size="large" />
+						<ActivityIndicator color="brand-primary" size="large" />
 					</S.CenteredContainer>
 				)}
 
@@ -126,7 +126,7 @@ export function Main() {
 
 						{isLoadingProducts ? (
 							<S.CenteredContainer>
-								<ActivityIndicator color="#D73035" size="large" />
+								<ActivityIndicator color="brand-primary" size="large" />
 							</S.CenteredContainer>
 						) : (
 							<>
@@ -137,7 +137,7 @@ export function Main() {
 								) : (
 									<S.CenteredContainer>
 										<Empty />
-										<Text color="#666" style={{ marginTop: 24 }}>
+										<Text color="gray-400" style={{ marginTop: 24 }}>
 											Nenhum produto encontrado!
 										</Text>
 									</S.CenteredContainer>

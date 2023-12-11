@@ -13,30 +13,30 @@ export function Header({ selectedTable, onCancelOrder }: HeaderProps) {
 		<S.Container>
 			{!selectedTable ? (
 				<>
-					<Text size={14} opacity={0.9}>
+					<Text size="body-sm" opacity={0.9}>
 						Bem-vindo(a) ao
 					</Text>
 
-					<Text size={24} weight="700">
+					<Text size="h4" weight="medium">
 						WAITER
-						<Text size={24}>APP</Text>
+						<Text size="h4">APP</Text>
 					</Text>
 				</>
 			) : (
 				<S.OrderContent>
 					<S.OrderHeader>
-						<Text size={24} weight="600">
+						<Text size="h4" weight="medium">
 							Pedido
 						</Text>
 						<TouchableOpacity onPress={onCancelOrder}>
-							<Text color="#D73035" weight="600" size={14}>
+							<Text color="brand-primary" weight="medium" size="body-sm">
 								Cancelar Pedido
 							</Text>
 						</TouchableOpacity>
 					</S.OrderHeader>
 
 					<S.Table>
-						<Text color="#666">Mesa {selectedTable}</Text>
+						<Text color="gray-400">Mesa {selectedTable}</Text>
 					</S.Table>
 				</S.OrderContent>
 			)}

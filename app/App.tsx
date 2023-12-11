@@ -1,9 +1,8 @@
 import { useFonts } from 'expo-font';
 import { ThemeProvider } from 'styled-components/native';
 
+import { Main } from '~/Main';
 import { theme } from '~/styles/theme';
-
-import { Main } from './src/Main';
 
 export default function App() {
 	const [isFontLoaded] = useFonts({

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { FlatList } from 'react-native';
 
-import type { Product } from '~/@types/product';
 import { PlusCircle } from '~/components/Icons/PlusCircle';
+import type { Product } from '~/service/requests/products';
 import { formatCurrency } from '~/utils/formatCurrency';
 
 import { ProductModal } from '../ProductModal';
@@ -41,7 +41,7 @@ export function Menu({ onAddToCart, products }: MenuProps) {
 				renderItem={({ item: product }) => (
 					<S.Product onPress={() => handleOpenModal(product)}>
 						<S.ProductImage
-							source={{ uri: `http://192.168.0.23:3001/uploads/${product.imagePath}` }}
+							source={{ uri: `http://192.168.0.20:3001/uploads/${product.imagePath}` }}
 						/>
 
 						<S.ProductDetails>

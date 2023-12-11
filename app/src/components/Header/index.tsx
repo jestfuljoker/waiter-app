@@ -17,7 +17,7 @@ export function Header({ selectedTable, onCancelOrder }: HeaderProps) {
 						Bem-vindo(a) ao
 					</Text>
 
-					<Text size="h4" weight="medium">
+					<Text size="h4" weight="bold">
 						WAITER
 						<Text size="h4">APP</Text>
 					</Text>

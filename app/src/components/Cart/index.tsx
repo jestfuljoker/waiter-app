@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { FlatList, TouchableOpacity } from 'react-native';
 
-import type { CartItem } from '~/@types/cartItem';
-import type { Product } from '~/@types/product';
-import { api } from '~/service/api';
+import type { CreateOrderPayload } from '~/service/requests/orders';
+import { OrdersService } from '~/service/requests/orders';
+import type { Product } from '~/service/requests/products';
 import { formatCurrency } from '~/utils/formatCurrency';
 
 import { Button } from '../Button';
@@ -12,6 +12,11 @@ import { PlusCircle } from '../Icons/PlusCircle';
 import { OrderConfirmedModal } from '../OrderConfirmedModal';
 import { Text } from '../Text';
 import * as S from './styles';
+
+export interface CartItem {
+	product: Product;
+	quantity: number;
+}
 
 interface CartProps {
 	cartItems: CartItem[];
@@ -36,7 +41,7 @@ export function Cart({
 	}, 0);
 
 	async function handleConfirmOrder() {
-		const payload = {
+		const payload: CreateOrderPayload = {
 			table: selectedTable,
 			products: cartItems.map((cartItem) => ({
 				product: cartItem.product.id,
@@ -46,7 +51,7 @@ export function Cart({
 
 		setIsLoading(true);
 
-		await api.post('/orders', payload);
+		await OrdersService.createOrder(payload);
 
 		setIsLoading(false);
 		setIsModalVisible(true);
@@ -71,7 +76,7 @@ export function Cart({
 						<S.CartItem>
 							<S.ProductContainer>
 								<S.Image
-									source={{ uri: `http://192.168.0.23:3001/uploads/${cartItem.product.imagePath}` }}
+									source={{ uri: `http://192.168.0.20:3001/uploads/${cartItem.product.imagePath}` }}
 								/>
 
 								<S.QuantityContainer>

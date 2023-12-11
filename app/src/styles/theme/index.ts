@@ -6,7 +6,7 @@ import type { Color, FontSize } from './types';
 export const theme = { colors, font } as const;
 
 export function getColor(color: Color, theme: DefaultTheme): string {
-	const [section, key] = color.split('.') as [
+	const [section, key] = color.split('-') as [
 		keyof typeof theme.colors,
 		keyof (typeof theme.colors)[keyof typeof theme.colors],
 	];
@@ -15,7 +15,5 @@ export function getColor(color: Color, theme: DefaultTheme): string {
 }
 
 export function getFontSize(fontSize: FontSize, theme: DefaultTheme) {
-	const [size] = fontSize.split(':') as [keyof typeof theme.font.sizes];
-
-	return theme.font.sizes[size];
+	return theme.font.sizes[fontSize];
 }

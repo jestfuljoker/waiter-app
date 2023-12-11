@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FlatList } from 'react-native';
 
-import type { Category } from '~/@types/category';
+import type { Category } from '~/service/requests/categories';
 
 import { Text } from '../Text';
 import * as S from './styles';
@@ -37,7 +37,7 @@ export function Categories({ categories, onSelectCategory }: CategoriesProps) {
 							<Text opacity={isSelected ? 1 : 0.5}>{category.icon}</Text>
 						</S.Icon>
 
-						<Text size="body-sm" weight="bold" opacity={isSelected ? 1 : 0.5}>
+						<Text size="body-sm" weight="medium" opacity={isSelected ? 1 : 0.5}>
 							{category.name}
 						</Text>
 					</S.Category>

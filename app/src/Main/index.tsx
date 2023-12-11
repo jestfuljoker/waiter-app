@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
 import { ActivityIndicator } from 'react-native';
 
-import type { CartItem } from '~/@types/cartItem';
-import type { Category } from '~/@types/category';
-import type { Product } from '~/@types/product';
 import { Button } from '~/components/Button';
+import type { CartItem } from '~/components/Cart';
 import { Cart } from '~/components/Cart';
 import { Categories } from '~/components/Categories';
 import { Header } from '~/components/Header';
@@ -12,7 +10,10 @@ import { Empty } from '~/components/Icons/Empty';
 import { Menu } from '~/components/Menu';
 import { TableModal } from '~/components/TableModal';
 import { Text } from '~/components/Text';
-import { api } from '~/service/api';
+import type { Category } from '~/service/requests/categories';
+import { CategoriesService } from '~/service/requests/categories';
+import type { Product } from '~/service/requests/products';
+import { ProductsService } from '~/service/requests/products';
 
 import * as S from './styles';
 
@@ -26,23 +27,25 @@ export function Main() {
 	const [categories, setCategories] = useState<Category[]>([]);
 
 	useEffect(() => {
-		Promise.all([api.get<Category[]>('/categories'), api.get<Product[]>('/products')]).then(
+		Promise.all([CategoriesService.listCategories(), ProductsService.listProducts()]).then(
 			([categoriesResponse, productsResponse]) => {
-				setCategories(categoriesResponse.data);
-				setProducts(productsResponse.data);
+				setCategories(categoriesResponse);
+				setProducts(productsResponse);
 				setIsLoading(false);
 			},
 		);
 	}, []);
 
 	async function handleSelectCategory(categoryId: string) {
-		const route = !categoryId ? '/products' : `/categories/${categoryId}/products`;
+		let loadedProducts: Product[] = [];
 
 		setIsLoadingProducts(true);
 
-		const { data } = await api.get<Product[]>(route);
+		loadedProducts = categoryId
+			? await ProductsService.listProductsByCategoryId(categoryId)
+			: await ProductsService.listProducts();
 
-		setProducts(data);
+		setProducts(loadedProducts);
 		setIsLoadingProducts(false);
 	}
 

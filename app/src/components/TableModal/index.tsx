@@ -32,7 +32,7 @@ export function TableModal({ visible, onClose, onSave }: TableModalProps) {
 						<Text weight="medium">Informe a mesa</Text>
 
 						<TouchableOpacity onPress={onClose}>
-							<Close color="gray-400" />
+							<Close color="#666" />
 						</TouchableOpacity>
 					</S.Header>
 

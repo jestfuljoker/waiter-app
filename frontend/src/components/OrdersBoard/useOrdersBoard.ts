@@ -1,9 +1,8 @@
 import { useCallback, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import type { Order } from '~/@types/global';
-import { OrderStatus } from '~/@types/global';
-import { api } from '~/service/api';
+import { OrderStatus, type Order } from '~/service/requests/orders';
+import { OrdersService } from '~/service/requests/orders/service';
 
 interface UseOrdersBoardProps {
 	onCancelOrder: (orderId: string) => void;
@@ -28,7 +27,7 @@ export function useOrdersBoard({ onCancelOrder, onOrderStatusChange }: UseOrders
 	async function handleCancelOrder() {
 		setIsLoading(true);
 
-		await api.delete(`/orders/${selectedOrder?.id}`);
+		await OrdersService.cancelOrder(selectedOrder!.id);
 
 		onCancelOrder(selectedOrder!.id);
 		setIsLoading(false);
@@ -42,9 +41,7 @@ export function useOrdersBoard({ onCancelOrder, onOrderStatusChange }: UseOrders
 		const status =
 			selectedOrder?.status === OrderStatus.WAITING ? OrderStatus.IN_PRODUCTION : OrderStatus.DONE;
 
-		await api.patch(`/orders/${selectedOrder?.id}`, {
-			status,
-		});
+		await OrdersService.changeOrderStatus(selectedOrder!.id, status);
 
 		toast.success(`O pedido da mesa ${selectedOrder?.table} teve o status alterado com sucesso!`);
 		onOrderStatusChange(selectedOrder!.id, status);

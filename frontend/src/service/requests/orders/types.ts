@@ -1,22 +1,9 @@
+import { type Product } from '../products/types';
+
 export enum OrderStatus {
 	WAITING = 'WAITING',
 	IN_PRODUCTION = 'IN_PRODUCTION',
 	DONE = 'DONE',
-}
-
-export interface Ingredients {
-	id: string;
-	name: string;
-	icon: string;
-}
-
-export interface Product {
-	id: string;
-	name: string;
-	description: string;
-	imagePath: string;
-	price: number;
-	ingredients: Ingredients[];
 }
 
 export interface Order {

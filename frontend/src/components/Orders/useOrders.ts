@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import socketIo from 'socket.io-client';
 
-import { OrderStatus, type Order } from '~/@types/global';
-import { api } from '~/service/api';
+import { type Order } from '~/service/requests/orders';
+import { OrderStatus } from '~/service/requests/orders';
+import { OrdersService } from '~/service/requests/orders/service';
 
 export function useOrders() {
 	const [orders, setOrders] = useState<Order[]>([]);
@@ -17,9 +18,9 @@ export function useOrders() {
 
 	useEffect(() => {
 		async function fetchOrders() {
-			const { data } = await api.get<Order[]>('/orders');
+			const loadedOrders = await OrdersService.listOrders();
 
-			setOrders(data);
+			setOrders(loadedOrders);
 		}
 
 		fetchOrders();

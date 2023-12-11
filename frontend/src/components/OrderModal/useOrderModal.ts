@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
-import type { Order } from '~/@types/global';
 import { useAnimatedUnmount } from '~/hooks';
+import { type Order } from '~/service/requests/orders';
 
 interface UseOrderModalProps {
 	visible: boolean;

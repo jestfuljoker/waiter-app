@@ -1,7 +1,6 @@
-import type { ReactElement } from 'react';
+import { type ReactElement } from 'react';
 
-import type { OrderStatus } from '~/@types/global';
-import type { Order } from '~/@types/global';
+import { type Order, type OrderStatus } from '~/service/requests/orders';
 
 import { OrderModal } from '../OrderModal';
 import * as S from './styles';

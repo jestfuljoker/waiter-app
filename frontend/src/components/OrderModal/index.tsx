@@ -1,11 +1,9 @@
-import { useEffect } from 'react';
-
 import { OrderStatus, type Order } from '~/@types/global';
 import closeIcon from '~/assets/images/close-icon.svg';
-import { useAnimatedUnmount } from '~/hooks';
 import { formatCurrency } from '~/utils';
 
 import * as S from './styles';
+import { useOrderModal } from './useOrderModal';
 
 interface OrderModalProps {
 	visible: boolean;
@@ -39,24 +37,7 @@ export function OrderModal({
 	onCancelOrder,
 	onChangeOrderStatus,
 }: OrderModalProps) {
-	const { elementRef, shouldRender } = useAnimatedUnmount(visible);
-
-	useEffect(() => {
-		function handleKeyDown(event: KeyboardEvent) {
-			if (event.key === 'Escape') {
-				onClose();
-			}
-		}
-
-		document.addEventListener('keydown', handleKeyDown);
-
-		return () => document.removeEventListener('keydown', handleKeyDown);
-	}, [onClose]);
-
-	const total =
-		order?.products.reduce((accumulator, { product, quantity }) => {
-			return accumulator + quantity * product.price;
-		}, 0) || 0;
+	const { elementRef, shouldRender, total } = useOrderModal({ order, visible, onClose });
 
 	return shouldRender ? (
 		<S.Overlay $isLeaving={!visible} ref={elementRef} onClick={onClose}>

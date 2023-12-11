@@ -1,7 +1,7 @@
 import { env } from '~/config/env';
 
 import HttpClient from '../../client';
-import type { Category } from './types';
+import { type Category } from './types';
 
 export class CategoriesService {
 	private static httpClient: HttpClient = new HttpClient(env.apiUrl);

@@ -1,4 +1,4 @@
-import type { colors, font } from './tokens';
+import { type colors, type font } from './tokens';
 
 type Brand = `brand-${keyof typeof colors.brand}`;
 type Gray = `gray-${keyof typeof colors.gray}`;

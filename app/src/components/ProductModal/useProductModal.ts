@@ -1,4 +1,4 @@
-import type { Product } from '~/service/requests/products';
+import { type Product } from '~/service/requests/products';
 
 interface UseProductModalProps {
 	onAddToCart: (product: Product) => void;

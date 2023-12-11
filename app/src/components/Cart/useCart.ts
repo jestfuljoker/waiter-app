@@ -1,9 +1,8 @@
 import { useState } from 'react';
 
-import type { CreateOrderPayload } from '~/service/requests/orders';
-import { OrdersService } from '~/service/requests/orders';
+import { OrdersService, type CreateOrderPayload } from '~/service/requests/orders';
 
-import type { CartItem } from '.';
+import { type CartItem } from '.';
 
 interface UseCartProps {
 	cartItems: CartItem[];

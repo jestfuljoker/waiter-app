@@ -1,7 +1,7 @@
 import { FlatList } from 'react-native';
 
 import { PlusCircle } from '~/components/Icons/PlusCircle';
-import type { Product } from '~/service/requests/products';
+import { type Product } from '~/service/requests/products';
 import { formatCurrency } from '~/utils/formatCurrency';
 
 import { ProductModal } from '../ProductModal';

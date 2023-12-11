@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import type { Product } from '~/service/requests/products';
+import { type Product } from '~/service/requests/products';
 
 export function useMenu() {
 	const [isProductModalVisible, setIsProductModalVisible] = useState(false);

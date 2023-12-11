@@ -2,7 +2,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import styled, { css } from 'styled-components/native';
 
 import { getColor, getFontSize } from '~/styles/theme';
-import type { Color, FontSize, FontWeight } from '~/styles/theme/types';
+import { type Color, type FontSize, type FontWeight } from '~/styles/theme/types';
 
 interface TextProps {
 	weight?: FontWeight;

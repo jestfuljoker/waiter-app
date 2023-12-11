@@ -1,7 +1,7 @@
-import type { DefaultTheme } from 'styled-components/native';
+import { type DefaultTheme } from 'styled-components/native';
 
 import { colors, font } from './tokens';
-import type { Color, FontSize } from './types';
+import { type Color, type FontSize } from './types';
 
 export const theme = { colors, font } as const;
 

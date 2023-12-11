@@ -8,7 +8,7 @@
 		"android": "expo start --android",
 		"ios": "expo start --ios",
 		"web": "expo start --web",
-		"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+		"lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
 		"format": "prettier --write src",
 		"format:all": "yarn lint && yarn format"
 	},

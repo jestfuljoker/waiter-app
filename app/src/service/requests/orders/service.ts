@@ -1,7 +1,7 @@
 import { env } from '~/config/env';
 
 import HttpClient from '../../client';
-import type { CreateOrderPayload } from './types';
+import { type CreateOrderPayload } from './types';
 
 export class OrdersService {
 	private static httpClient: HttpClient = new HttpClient(env.apiUrl);

@@ -1,6 +1,6 @@
 import { FlatList } from 'react-native';
 
-import type { Category } from '~/service/requests/categories';
+import { type Category } from '~/service/requests/categories';
 
 import { Text } from '../Text';
 import * as S from './styles';

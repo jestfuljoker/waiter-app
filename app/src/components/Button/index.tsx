@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import { ActivityIndicator, type TouchableOpacityProps } from 'react-native';
 
 import { Text } from '../Text';

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import type { CartItem } from '~/components/Cart';
-import type { Category } from '~/service/requests/categories';
+import { type CartItem } from '~/components/Cart';
+import { type Category } from '~/service/requests/categories';
 import { CategoriesService } from '~/service/requests/categories';
-import type { Product } from '~/service/requests/products';
+import { type Product } from '~/service/requests/products';
 import { ProductsService } from '~/service/requests/products';
 
 export function useMain() {

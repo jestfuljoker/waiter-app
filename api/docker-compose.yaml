@@ -1,8 +1,20 @@
 version: '3.8'
 services:
-  mongodb:
-    image: mongo
-    container_name: waiter-app-mongodb
+  db:
+    image: mysql
     restart: always
+    container_name: waiter-app-mysql
     ports:
-      - 27017:27017
+      - 3306:3306
+    environment:
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - waiter-app-mysql:/var/lib/mysql
+    expose:
+      - 3306
+
+volumes:
+  waiter-app-mysql:

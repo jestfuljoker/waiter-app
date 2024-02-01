@@ -21,10 +21,13 @@
 		"pg": "8.11.3",
 		"socket.io": "4.7.2",
 		"zennv": "0.1.1",
-		"zod": "3.22.4"
+		"zod": "3.22.4",
+		"fastify": "4.26.0",
+		"pino": "8.17.2"
 	},
 	"devDependencies": {
 		"tsup": "8.0.1",
+		"pino-pretty": "10.3.1",
 		"tsx": "4.6.2",
 		"@types/express": "4.17.21",
 		"@types/multer": "1.4.10",

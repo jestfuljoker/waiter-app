@@ -1,0 +1,25 @@
+import { type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
+import { numeric, pgTable, varchar } from 'drizzle-orm/pg-core';
+
+import { categories } from './category';
+import { makeCreatedAtAndUpdatedAt, makeId } from './common';
+
+export const products = pgTable('product', {
+	...makeId(),
+
+	name: varchar('name', { length: 255 }).notNull(),
+	description: varchar('description', { length: 255 }).notNull(),
+	imagePath: varchar('imagePath', { length: 255 }).notNull(),
+	price: numeric('price', { precision: 10, scale: 2 }).notNull(),
+	categoryId: varchar('categoryId', { length: 128 }).references(() => categories.id, {
+		onDelete: 'set null',
+	}),
+
+	...makeCreatedAtAndUpdatedAt(),
+});
+
+export type InsertProduct = InferInsertModel<typeof products>;
+
+export type UpdateProduct = Omit<Partial<InsertProduct>, 'id'>;
+
+export type Product = InferSelectModel<typeof products>;

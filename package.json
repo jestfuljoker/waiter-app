@@ -1,0 +1,9 @@
+{
+	"dependencies": {
+		"fastify": "^4.26.0",
+		"pino": "^8.17.2"
+	},
+	"devDependencies": {
+		"pino-pretty": "^10.3.1"
+	}
+}

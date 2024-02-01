@@ -1,20 +1,17 @@
 version: '3.8'
 services:
-  db:
-    image: mysql
-    restart: always
-    container_name: waiter-app-mysql
+  postgresdb:
+    image: postgres
+    container_name: waiter-app-postgres
     ports:
-      - 3306:3306
-    environment:
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      - 5432:5432
     volumes:
-      - waiter-app-mysql:/var/lib/mysql
-    expose:
-      - 3306
+      - pgdata:/data/postgres
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
 
 volumes:
-  waiter-app-mysql:
+  pgdata:
+    driver: local

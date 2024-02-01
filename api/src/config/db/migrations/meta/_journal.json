@@ -1,0 +1,34 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1706753585187,
+      "tag": "0000_special_lila_cheney",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1706753636571,
+      "tag": "0001_sad_jigsaw",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1706753644348,
+      "tag": "0002_freezing_liz_osborn",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1706753649027,
+      "tag": "0003_flat_living_lightning",
+      "breakpoints": true
+    }
+  ]
+}

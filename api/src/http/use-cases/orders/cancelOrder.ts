@@ -1,8 +1,11 @@
-import { type Request, type Response } from 'express';
+import { type FastifyReply, type FastifyRequest } from 'fastify';
 
 import { OrderModel } from '../../models';
 
-export async function cancelOrder(req: Request, res: Response): Promise<Response> {
+export async function cancelOrder(
+	request: FastifyRequest,
+	reply: FastifyReply,
+): Promise<FastifyReply> {
 	try {
 		const { orderId } = req.params;
 

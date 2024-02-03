@@ -1,8 +1,11 @@
-import { type Request, type Response } from 'express';
+import { type FastifyReply, type FastifyRequest } from 'fastify';
 
 import { OrderModel } from '../../models';
 
-export async function listOrders(req: Request, res: Response): Promise<Response> {
+export async function listOrders(
+	request: FastifyRequest,
+	reply: FastifyReply,
+): Promise<FastifyReply> {
 	try {
 		const orders = await OrderModel.find().sort({ createdAt: 1 }).populate('products.product');
 

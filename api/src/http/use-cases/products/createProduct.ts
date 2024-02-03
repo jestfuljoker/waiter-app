@@ -1,8 +1,11 @@
-import { type Request, type Response } from 'express';
+import { type FastifyReply, type FastifyRequest } from 'fastify';
 
 import { ProductModel } from '../../models';
 
-export async function createProduct(req: Request, res: Response): Promise<Response> {
+export async function createProduct(
+	request: FastifyRequest,
+	reply: FastifyReply,
+): Promise<FastifyReply> {
 	try {
 		const imagePath = req.file?.filename;
 		const { name, description, price, category, ingredients } = req.body;

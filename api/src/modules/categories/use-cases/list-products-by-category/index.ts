@@ -1,8 +1,11 @@
-import { type Request, type Response } from 'express';
+import { type FastifyReply, type FastifyRequest } from 'fastify';
 
 import { ProductModel } from '../../models';
 
-export async function listProductsByCategory(req: Request, res: Response): Promise<Response> {
+export async function listProductsByCategory(
+	request: FastifyRequest,
+	reply: FastifyReply,
+): Promise<FastifyReply> {
 	try {
 		const { categoryId } = req.params;
 

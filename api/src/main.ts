@@ -1,3 +1,7 @@
+import 'reflect-metadata';
+
+import '~/shared/container';
+
 import { env } from './config/env';
 import { buildServer } from './http';
 import { logger } from './utils';

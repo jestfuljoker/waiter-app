@@ -1,10 +1,11 @@
-import { type HttpErrorCodes } from './error-codes';
+import { type HttpStatusCodes } from '../types';
 
 export abstract class BaseError extends Error {
-	code: HttpErrorCodes;
-	constructor(message: string, statusCode: HttpErrorCodes) {
+	statusCode: HttpStatusCodes;
+
+	constructor(message: string, statusCode: HttpStatusCodes) {
 		super(message);
 		this.name = this.constructor.name;
-		this.code = statusCode;
+		this.statusCode = statusCode;
 	}
 }

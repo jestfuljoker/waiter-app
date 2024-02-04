@@ -1,22 +1,30 @@
 import { type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
-import { numeric, pgTable, varchar } from 'drizzle-orm/pg-core';
+import { index, numeric, pgTable, varchar } from 'drizzle-orm/pg-core';
 
 import { categories } from './category';
 import { makeCreatedAtAndUpdatedAt, makeId } from './common';
 
-export const products = pgTable('product', {
-	...makeId(),
+export const products = pgTable(
+	'product',
+	{
+		...makeId(),
 
-	name: varchar('name', { length: 255 }).notNull(),
-	description: varchar('description', { length: 255 }).notNull(),
-	imagePath: varchar('imagePath', { length: 255 }).notNull(),
-	price: numeric('price', { precision: 10, scale: 2 }).notNull(),
-	categoryId: varchar('categoryId', { length: 128 }).references(() => categories.id, {
-		onDelete: 'set null',
+		name: varchar('name', { length: 255 }).notNull(),
+		description: varchar('description', { length: 255 }).notNull(),
+		imagePath: varchar('imagePath', { length: 255 }).notNull(),
+		price: numeric('price', { precision: 10, scale: 2 }).notNull(),
+		categoryId: varchar('categoryId', { length: 128 }).references(() => categories.id, {
+			onDelete: 'set null',
+		}),
+
+		...makeCreatedAtAndUpdatedAt(),
+	},
+	(table) => ({
+		nameIdx: index('product_name_idx').on(table.name),
+		priceIdx: index('product_price_idx').on(table.price),
+		categoryIdIdx: index('product_categoryId_idx').on(table.categoryId),
 	}),
-
-	...makeCreatedAtAndUpdatedAt(),
-});
+);
 
 export type InsertProduct = InferInsertModel<typeof products>;
 

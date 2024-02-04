@@ -1,6 +1,11 @@
-import { db } from '~/config/db/connection';
-import { categories, type InsertCategory } from '~/config/db/schemas';
+import { eq, sql } from 'drizzle-orm';
 
+import { db } from '~/config/db/connection';
+import { categories, type Category, type InsertCategory } from '~/config/db/schemas';
+import { type PaginatedRequest } from '~/shared/types';
+import { normalizeString } from '~/utils';
+
+import { type ListCategoriesFilters } from '../use-cases/list-categories/use-case';
 import { type CategoryRepository } from './interface';
 
 export class DrizzleCategoryRepository implements CategoryRepository {
@@ -10,5 +15,47 @@ export class DrizzleCategoryRepository implements CategoryRepository {
 		});
 
 		return newCategory[0].id;
+	}
+
+	async findByName(name: string): Promise<Category | null> {
+		const [category] = await db.select().from(categories).where(eq(categories.name, name));
+
+		return category || null;
+	}
+
+	async findAll({
+		limit,
+		page,
+		name,
+	}: PaginatedRequest & ListCategoriesFilters): Promise<Category[]> {
+		const categoriesListQuery = db
+			.select()
+			.from(categories)
+			.offset((page - 1) * limit)
+			.limit(limit);
+
+		if (name) {
+			categoriesListQuery.where(
+				sql<string>`unaccent(${categories.name}) ILIKE '%' || ${normalizeString(name)} || '%'`,
+			);
+		}
+
+		const categoriesList = await categoriesListQuery;
+
+		return categoriesList;
+	}
+
+	async count(name?: string): Promise<number> {
+		const countQuery = db.select({ count: sql<number>`count(${categories.id})` }).from(categories);
+
+		if (name) {
+			countQuery.where(
+				sql<string>`unaccent(${categories.name}) ILIKE '%' || ${normalizeString(name)} || '%'`,
+			);
+		}
+
+		const [{ count }] = await countQuery;
+
+		return Number(count);
 	}
 }

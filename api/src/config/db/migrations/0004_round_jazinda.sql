@@ -1,0 +1,1 @@
+CREATE INDEX IF NOT EXISTS "category_name_idx" ON "category" ("name");

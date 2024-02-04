@@ -1,16 +1,22 @@
 import { type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
-import { pgTable, varchar } from 'drizzle-orm/pg-core';
+import { index, pgTable, varchar } from 'drizzle-orm/pg-core';
 
 import { makeCreatedAtAndUpdatedAt, makeId } from './common';
 
-export const categories = pgTable('category', {
-	...makeId(),
+export const categories = pgTable(
+	'category',
+	{
+		...makeId(),
 
-	name: varchar('name', { length: 255 }).notNull(),
-	icon: varchar('icon', { length: 255 }).notNull(),
+		name: varchar('name', { length: 255 }).notNull(),
+		icon: varchar('icon', { length: 255 }).notNull(),
 
-	...makeCreatedAtAndUpdatedAt(),
-});
+		...makeCreatedAtAndUpdatedAt(),
+	},
+	(table) => ({
+		nameIdx: index('category_name_idx').on(table.name),
+	}),
+);
 
 export type InsertCategory = InferInsertModel<typeof categories>;
 

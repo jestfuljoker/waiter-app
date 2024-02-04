@@ -1,14 +1,20 @@
 import { type FastifyRequest, type FastifyReply } from 'fastify';
+import { container } from 'tsyringe';
 
-export async function listCategories(
-	request: FastifyRequest,
+import { HttpStatusCodes } from '~/shared/types';
+
+import { type ListCategoryQueryString } from './schema';
+import { ListCategoriesUseCase } from './use-case';
+
+export async function listCategoriesController(
+	request: FastifyRequest<{ Querystring: ListCategoryQueryString }>,
 	reply: FastifyReply,
 ): Promise<FastifyReply> {
-	try {
-		const categories = await CategoryModel.find();
+	const params = request.query;
 
-		return res.json(categories.map((category) => category.toJSON()));
-	} catch (error) {
-		return res.sendStatus(500);
-	}
+	const listCategoriesUseCase = container.resolve(ListCategoriesUseCase);
+
+	const categories = await listCategoriesUseCase.handle(params);
+
+	return reply.status(HttpStatusCodes.SUCCESS).send(categories);
 }

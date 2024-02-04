@@ -1,6 +1,8 @@
 import { type FastifyReply, type FastifyRequest } from 'fastify';
 import { container } from 'tsyringe';
 
+import { HttpStatusCodes } from '~/shared/types';
+
 import { type CreateCategoryBody } from './schema';
 import { CreateCategoryUseCase } from './use-case';
 
@@ -14,7 +16,7 @@ export async function createCategoryController(
 
 	const categoryId = await createCategoryUseCase.handle(body);
 
-	return reply.status(201).send({
+	return reply.status(HttpStatusCodes.CREATED).send({
 		...body,
 		id: categoryId,
 	});

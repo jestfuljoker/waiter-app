@@ -1,13 +1,20 @@
 import { z } from 'zod';
-import { zodToJsonSchema } from 'zod-to-json-schema';
+
+import { fieldIsRequired } from '~/utils';
 
 const createCategorySchema = z.object({
-	name: z.string(),
-	icon: z.string(),
+	name: z
+		.string({ required_error: fieldIsRequired('Nome') })
+		.trim()
+		.min(1, fieldIsRequired('Nome')),
+	icon: z
+		.string({ required_error: fieldIsRequired('Ícone') })
+		.trim()
+		.min(1, fieldIsRequired('Ícone')),
 });
 
 export type CreateCategoryBody = z.infer<typeof createCategorySchema>;
 
 export const createCategoryJsonSchema = {
-	body: zodToJsonSchema(createCategorySchema, 'createCategorySchema'),
+	body: createCategorySchema,
 };

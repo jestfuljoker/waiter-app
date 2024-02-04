@@ -14,7 +14,7 @@ export class CreateCategoryUseCase {
 		const categoryAlreadyExists = await this.categoryRepository.findByName(name);
 
 		if (categoryAlreadyExists) {
-			throw new BadRequestError('Category already exists');
+			throw new BadRequestError('Categoria já existe');
 		}
 
 		const categoryId = await this.categoryRepository.insert({

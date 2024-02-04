@@ -4,14 +4,19 @@ import { InMemoryCategoryRepository } from '~/modules/categories/repositories';
 
 import { CreateCategoryUseCase } from './use-case';
 
+let categoryRepository: InMemoryCategoryRepository;
+
 function makeSut() {
-	const categoryRepository = new InMemoryCategoryRepository();
 	const sut = new CreateCategoryUseCase(categoryRepository);
 
 	return { sut };
 }
 
 describe('CreateCategoryUseCase', () => {
+	beforeEach(() => {
+		categoryRepository = new InMemoryCategoryRepository();
+	});
+
 	it('should be able to create a new category', async () => {
 		const { sut } = makeSut();
 
@@ -38,6 +43,6 @@ describe('CreateCategoryUseCase', () => {
 			name: categoryName,
 		});
 
-		await expect(promise).rejects.toThrowError('Category already exists');
+		await expect(promise).rejects.toThrowError('Categoria já existe');
 	});
 });

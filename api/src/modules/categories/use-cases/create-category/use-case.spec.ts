@@ -1,5 +1,6 @@
 import { faker } from '@faker-js/faker';
 
+import { type InsertCategory } from '~/config/db/schemas';
 import { InMemoryCategoryRepository } from '~/modules/categories/repositories';
 
 import { CreateCategoryUseCase } from './use-case';
@@ -31,17 +32,14 @@ describe('CreateCategoryUseCase', () => {
 	it('should throw if category already exists', async () => {
 		const { sut } = makeSut();
 
-		const categoryName = faker.lorem.word();
-
-		await sut.handle({
+		const category: InsertCategory = {
 			icon: faker.internet.emoji(),
-			name: categoryName,
-		});
+			name: faker.lorem.word(),
+		};
 
-		const promise = sut.handle({
-			icon: faker.internet.emoji(),
-			name: categoryName,
-		});
+		await sut.handle(category);
+
+		const promise = sut.handle(category);
 
 		await expect(promise).rejects.toThrowError('Categoria já existe');
 	});

@@ -24,7 +24,9 @@ export class InMemoryCategoryRepository implements CategoryRepository {
 	}
 
 	async findByName(name: string): Promise<Category | null> {
-		const category = this.categories.find((category) => category.name === name);
+		const category = this.categories.find((category) =>
+			normalizeString(category.name).includes(name),
+		);
 
 		return category || null;
 	}

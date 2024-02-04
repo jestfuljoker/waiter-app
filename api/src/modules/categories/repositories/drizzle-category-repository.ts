@@ -1,4 +1,4 @@
-import { eq, sql } from 'drizzle-orm';
+import { sql } from 'drizzle-orm';
 
 import { db } from '~/config/db/connection';
 import { categories, type Category, type InsertCategory } from '~/config/db/schemas';
@@ -9,6 +9,10 @@ import { type ListCategoriesFilters } from '../use-cases/list-categories/use-cas
 import { type CategoryRepository } from './interface';
 
 export class DrizzleCategoryRepository implements CategoryRepository {
+	private normalizedNameWhere(name: string) {
+		return sql<string>`unaccent(${categories.name}) ILIKE '%' || ${normalizeString(name)} || '%'`;
+	}
+
 	async insert(category: InsertCategory): Promise<string> {
 		const newCategory = await db.insert(categories).values(category).returning({
 			id: categories.id,
@@ -18,7 +22,7 @@ export class DrizzleCategoryRepository implements CategoryRepository {
 	}
 
 	async findByName(name: string): Promise<Category | null> {
-		const [category] = await db.select().from(categories).where(eq(categories.name, name));
+		const [category] = await db.select().from(categories).where(this.normalizedNameWhere(name));
 
 		return category || null;
 	}
@@ -35,9 +39,7 @@ export class DrizzleCategoryRepository implements CategoryRepository {
 			.limit(limit);
 
 		if (name) {
-			categoriesListQuery.where(
-				sql<string>`unaccent(${categories.name}) ILIKE '%' || ${normalizeString(name)} || '%'`,
-			);
+			categoriesListQuery.where(this.normalizedNameWhere(name));
 		}
 
 		const categoriesList = await categoriesListQuery;
@@ -49,9 +51,7 @@ export class DrizzleCategoryRepository implements CategoryRepository {
 		const countQuery = db.select({ count: sql<number>`count(${categories.id})` }).from(categories);
 
 		if (name) {
-			countQuery.where(
-				sql<string>`unaccent(${categories.name}) ILIKE '%' || ${normalizeString(name)} || '%'`,
-			);
+			countQuery.where(this.normalizedNameWhere(name));
 		}
 
 		const [{ count }] = await countQuery;

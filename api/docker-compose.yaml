@@ -1,7 +1,9 @@
 version: '3.8'
 services:
   postgresdb:
-    image: postgres
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: waiter-app-postgres
     ports:
       - 5432:5432

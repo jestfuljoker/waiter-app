@@ -4,31 +4,35 @@ import { type InsertProduct } from '~/config/db/schemas';
 import { type ProductsRepository } from '~/modules/products/repositories';
 import { ROWS_PER_PAGE } from '~/utils';
 
-export function makeProducts(): InsertProduct[] {
+export function makeProducts(categoryIds: string[] = []): InsertProduct[] {
 	return [
 		{
 			name: 'Product 1',
 			description: faker.commerce.productDescription(),
 			price: faker.commerce.price(),
 			imagePath: faker.internet.url(),
+			categoryId: categoryIds[0] || null,
 		},
 		{
 			name: 'Próduct 2',
 			description: faker.commerce.productDescription(),
 			price: faker.commerce.price(),
 			imagePath: faker.internet.url(),
+			categoryId: categoryIds[1] || null,
 		},
 		{
 			name: 'product 3',
 			description: faker.commerce.productDescription(),
 			price: faker.commerce.price(),
 			imagePath: faker.internet.url(),
+			categoryId: categoryIds[2] || null,
 		},
 		{
 			name: 'some product',
 			description: faker.commerce.productDescription(),
 			price: faker.commerce.price(),
 			imagePath: faker.internet.url(),
+			categoryId: categoryIds[3] || null,
 		},
 	];
 }

@@ -9,7 +9,7 @@ export async function createCategories(
 	limit = ROWS_PER_PAGE,
 	categories: InsertCategory[] = [],
 ) {
-	await Promise.all([
+	return Promise.all([
 		...categories.map((category) => categoriesRepository.insert(category)),
 		...Array.from({ length: limit - categories.length }, () =>
 			categoriesRepository.insert({

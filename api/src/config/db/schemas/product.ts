@@ -1,7 +1,7 @@
 import { type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
 import { index, numeric, pgTable, varchar } from 'drizzle-orm/pg-core';
 
-import { categories } from './category';
+import { type Category, categories } from './category';
 import { makeCreatedAtAndUpdatedAt, makeId } from './common';
 
 export const products = pgTable(
@@ -31,3 +31,5 @@ export type InsertProduct = InferInsertModel<typeof products>;
 export type UpdateProduct = Omit<Partial<InsertProduct>, 'id'>;
 
 export type Product = InferSelectModel<typeof products>;
+
+export type ProductWithCategory = { product: Product; category: Category | null };
